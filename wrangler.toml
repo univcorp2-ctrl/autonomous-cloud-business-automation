@@ -8,6 +8,7 @@ APP_ENV = "development"
 ALLOW_LIVE_TRADING = "false"
 APPROVAL_REQUIRED = "true"
 
+# After creating D1, replace database_id.
 [[d1_databases]]
 binding = "DB"
 database_name = "business_automation"
@@ -20,11 +21,6 @@ bucket_name = "business-automation-reports"
 [[queues.producers]]
 binding = "JOB_QUEUE"
 queue = "automation-jobs"
-
-[[queues.consumers]]
-queue = "automation-jobs"
-max_batch_size = 10
-max_batch_timeout = 30
 
 [triggers]
 crons = ["0 */6 * * *"]
