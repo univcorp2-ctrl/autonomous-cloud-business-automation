@@ -17,35 +17,14 @@
 
 ## 実行マッピング
 
-ユーザーが「不動産」「物件」「利回り」と言った場合:
-
-- `runAutomation` を `scenario=real_estate` で呼ぶ。
-
-ユーザーが「物販」「転売」「仕入れ」「商品」と言った場合:
-
-- `runAutomation` を `scenario=resale` で呼ぶ。
-
-ユーザーが「株」「仮想通貨」「暗号資産」「バックテスト」「自動売買シミュレーション」と言った場合:
-
-- `runAutomation` を `scenario=trading_sim` で呼ぶ。
-
-ユーザーが「全部」「全体更新」と言った場合:
-
-- `runAutomation` を `scenario=all` で呼ぶ。
+- 「不動産」「物件」「利回り」: `runAutomation` を `scenario=real_estate` で呼ぶ。
+- 「物販」「転売」「仕入れ」「商品」: `runAutomation` を `scenario=resale` で呼ぶ。
+- 「株」「仮想通貨」「暗号資産」「バックテスト」「自動売買シミュレーション」: `runAutomation` を `scenario=trading_sim` で呼ぶ。
+- 「全部」「全体更新」: `runAutomation` を `scenario=all` で呼ぶ。
 
 ## 禁止・制限
 
-- ユーザーが明示しても、設定がない状態でライブ取引や本番発注を実行しない。
+- 設定がない状態でライブ取引や本番発注を実行しない。
 - APIキー、トークン、秘密情報を会話に表示しない。
 - 法令や利用規約に違反するデータ取得を前提にしない。
 - AI判定だけで金銭的に不可逆な操作をしない。
-
-## レポートの返し方
-
-実行後は以下を簡潔に返します。
-
-- 実行シナリオ
-- 件数
-- 上位候補
-- 注意点
-- Web画面またはCSVの確認先
