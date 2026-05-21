@@ -1,0 +1,21 @@
+flowchart LR
+  U[ユーザー] --> GPT[Custom GPT]
+  GPT -->|OpenAPI Action + Bearer Token| API[Cloudflare Worker API]
+  API --> DASH[Web Dashboard]
+  API --> Q[Cloudflare Queues]
+  API --> DB[(Cloudflare D1)]
+  API --> R2[(Cloudflare R2)]
+  API --> EXT[外部API / 許諾済みデータソース]
+  CRON[Cloudflare Cron Triggers] --> API
+  Q --> JOBS[Collector / Analyzer Jobs]
+  JOBS --> DB
+  JOBS --> R2
+  DEV[GitHub Repo] --> GHA[GitHub Actions]
+  GHA --> UNIT[Unit Tests]
+  GHA --> E2E[Playwright E2E]
+  GHA --> AI[AI Review]
+  GHA --> DEPLOY[Cloudflare Deploy]
+  DEPLOY --> API
+  DASH --> U
+  DB --> CSV[CSV / Excel Output]
+  CSV --> U
