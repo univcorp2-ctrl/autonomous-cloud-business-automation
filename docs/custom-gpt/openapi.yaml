@@ -1,0 +1,102 @@
+openapi: 3.1.0
+info:
+  title: Autonomous Business Automation API
+  version: 0.1.0
+  description: API for Custom GPT to run cloud automation jobs and fetch reports.
+servers:
+  - url: https://YOUR-WORKER-URL.workers.dev
+    description: Replace with your deployed Cloudflare Worker URL
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    RunRequest:
+      type: object
+      properties:
+        scenario:
+          type: string
+          enum: [real_estate, resale, trading_sim, crypto_sim, all]
+        dryRun:
+          type: boolean
+          default: true
+        notes:
+          type: string
+        filters:
+          type: object
+          additionalProperties: true
+      required: [scenario]
+    RunResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        jobId:
+          type: string
+        scenario:
+          type: string
+        dryRun:
+          type: boolean
+        message:
+          type: string
+    ReportResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        generatedAt:
+          type: string
+        reports:
+          type: array
+          items:
+            type: object
+security:
+  - bearerAuth: []
+paths:
+  /api/health:
+    get:
+      operationId: getHealth
+      summary: Check API health
+      responses:
+        '200':
+          description: Health status
+  /api/run:
+    post:
+      operationId: runAutomation
+      summary: Run an automation scenario
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RunRequest'
+      responses:
+        '200':
+          description: Job accepted or completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RunResponse'
+  /api/report:
+    get:
+      operationId: getLatestReport
+      summary: Get latest automation report
+      responses:
+        '200':
+          description: Latest report
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponse'
+  /api/export.csv:
+    get:
+      operationId: exportCsv
+      summary: Export latest results as CSV for Excel
+      responses:
+        '200':
+          description: CSV file
+          content:
+            text/csv:
+              schema:
+                type: string
