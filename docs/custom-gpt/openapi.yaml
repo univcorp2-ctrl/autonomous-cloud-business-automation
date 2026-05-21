@@ -27,30 +27,6 @@ components:
           type: object
           additionalProperties: true
       required: [scenario]
-    RunResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-        jobId:
-          type: string
-        scenario:
-          type: string
-        dryRun:
-          type: boolean
-        message:
-          type: string
-    ReportResponse:
-      type: object
-      properties:
-        ok:
-          type: boolean
-        generatedAt:
-          type: string
-        reports:
-          type: array
-          items:
-            type: object
 security:
   - bearerAuth: []
 paths:
@@ -59,8 +35,7 @@ paths:
       operationId: getHealth
       summary: Check API health
       responses:
-        '200':
-          description: Health status
+        '200': { description: Health status }
   /api/run:
     post:
       operationId: runAutomation
@@ -72,31 +47,16 @@ paths:
             schema:
               $ref: '#/components/schemas/RunRequest'
       responses:
-        '200':
-          description: Job accepted or completed
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/RunResponse'
+        '200': { description: Job accepted or completed }
   /api/report:
     get:
       operationId: getLatestReport
       summary: Get latest automation report
       responses:
-        '200':
-          description: Latest report
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/ReportResponse'
+        '200': { description: Latest report }
   /api/export.csv:
     get:
       operationId: exportCsv
       summary: Export latest results as CSV for Excel
       responses:
-        '200':
-          description: CSV file
-          content:
-            text/csv:
-              schema:
-                type: string
+        '200': { description: CSV file }
