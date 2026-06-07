@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "wrangler dev --test-scheduled --port 8787",
     "build": "tsc --noEmit",
-    "test": "vitest run",
+    "test": "vitest run test/",
     "test:e2e": "playwright test",
     "deploy": "wrangler deploy",
     "ai:review": "node -e \"console.log(JSON.stringify({ok:true,mode:'placeholder',checkedAt:new Date().toISOString()},null,2))\""
