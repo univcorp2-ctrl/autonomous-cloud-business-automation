@@ -1,11 +1,9 @@
 name: CI CD
-
 on:
   pull_request:
   push:
     branches: [main]
   workflow_dispatch:
-
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -36,7 +34,6 @@ jobs:
           path: playwright-report/
           if-no-files-found: ignore
           retention-days: 14
-
   deploy:
     needs: test
     runs-on: ubuntu-latest
@@ -48,17 +45,22 @@ jobs:
         with:
           node-version: 22
       - run: npm install
-      - uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: deploy
+      - name: Deploy to Cloudflare (skipped if secrets not set)
+        run: |
+          if [ -z "$CLOUDFLARE_API_TOKEN" ]; then
+            echo "CLOUDFLARE_API_TOKEN not set — skipping deploy (add secret to enable)"
+            exit 0
+          fi
+          npx wrangler deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
       - name: Production health check
         run: |
-          if [ -n "$WORKER_BASE_URL" ]; then
-            curl --fail --silent --show-error "$WORKER_BASE_URL/api/health"
-          else
-            echo "WORKER_BASE_URL not set, skipping health check"
+          if [ -z "$WORKER_BASE_URL" ]; then
+            echo "WORKER_BASE_URL not set — skipping health check"
+            exit 0
           fi
+          curl --fail --silent --show-error "$WORKER_BASE_URL/api/health"
         env:
           WORKER_BASE_URL: ${{ secrets.WORKER_BASE_URL }}
