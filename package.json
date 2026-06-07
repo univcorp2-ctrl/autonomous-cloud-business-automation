@@ -15,9 +15,13 @@
     "@cloudflare/workers-types": "^4.20260514.0",
     "@playwright/test": "^1.52.0",
     "@types/node": "^22.0.0",
+    "playwright": "^1.52.0",
     "typescript": "^5.8.3",
     "vitest": "^3.1.4",
     "wait-on": "^8.0.3",
     "wrangler": "^4.16.0"
+  },
+  "overrides": {
+    "playwright": "^1.52.0"
   }
 }
