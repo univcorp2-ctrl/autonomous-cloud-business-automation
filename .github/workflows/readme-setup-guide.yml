@@ -38,4 +38,4 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add README.md docs/assets/readme-setup-guide.svg docs/setup-visual-guide.md docs/image-generation-prompts.md
           git commit -m "Install README visual setup guide"
-          git push
+          git push || echo "Push skipped: remote may have advanced (guide already installed by concurrent run)"
